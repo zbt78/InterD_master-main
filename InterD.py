@@ -500,18 +500,30 @@ if __name__ == "__main__":
 
     bias_train, bias_validation, bias_test, unif_train, unif_validation, unif_test, m, n = utils.load_dataset.load_dataset(data_name=args.dataset, type = args.type, seed = args.seed, device=device)
 
-    f1 = open('Trained_MF_model.model', 'wb')
+    f1 = open('Trained_MF_model', 'wb')
+    f2 = open('MF_metrics', 'wb')
 
     Trained_MF_model, MF_metrics = train_and_eval_MF(bias_train+unif_train, bias_validation, bias_test, unif_validation, unif_test, m, n, args=args)
     
     pickle.dump(Trained_MF_model, f1)
     f1.close()
+    pickle.dump(MF_metrics, f2)
+    f2.close()
     
-    f2 = open('Trained_MF_model.model', 'rb')
-    data1 = pickle.load(f2)
+    
+    f3 = open('Trained_AutoDebias_model', 'wb')
+    f4 = open('Trained_AutoDebias_model', 'wb')
     
     
     Trained_AutoDebias_model, Auto_metrics = train_and_eval_AutoDebias(bias_train, bias_validation, bias_test, unif_train, unif_validation, unif_test, m, n, args=args)
     
+    pickle.dump(Trained_AutoDebias_model, f3)
+    f3.close()
+    pickle.dump(Auto_metrics, f4)
+    f4.close()
+    
+    # 打开文件读取
+    # f1 = open(path, 'rb')
+    # data1 = pickle.load(f1)
     
     train_and_eval_InterD(bias_train+unif_train, bias_validation, bias_test, unif_validation, unif_test, m, n, Trained_MF_model, Trained_AutoDebias_model, MF_metrics, Auto_metrics, gama = args.gama, args=args)
