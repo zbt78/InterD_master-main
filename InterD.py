@@ -512,7 +512,7 @@ if __name__ == "__main__":
     
     
     f3 = open('Trained_AutoDebias_model', 'wb')
-    f4 = open('Trained_AutoDebias_model', 'wb')
+    f4 = open('Auto_metrics', 'wb')
     
     
     Trained_AutoDebias_model, Auto_metrics = train_and_eval_AutoDebias(bias_train, bias_validation, bias_test, unif_train, unif_validation, unif_test, m, n, args=args)
